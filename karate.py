@@ -2,6 +2,12 @@ import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
+import os
+import scipy as sp
+import scipy.sparse
+
+# Posiziona la working directory nella stessa cartella in cui si trova lo script Python
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 PDF_NAME = "karate_er_grafici.pdf"
 
@@ -80,7 +86,8 @@ with PdfPages(PDF_NAME) as pdf:
     print("\n--- GENERAZIONE GRAFI DI ERDŐS-RÉNYI ---")
 
     # Prova 1: pochi nodi, probabilità media
-    n1, p1 = 100000, 0.05
+    n = 10000
+    n1, p1 = n, 0.05
     ER1 = nx.erdos_renyi_graph(n1, p1, seed=1)
     degrees = [d for n, d in ER1.degree()]
     degree_counts = np.bincount(degrees)
@@ -90,7 +97,7 @@ with PdfPages(PDF_NAME) as pdf:
     plt.close(fig)
 
     # Prova 2: stesso n, probabilità più alta (rete più densa)
-    n2, p2 = 100000, 0.15
+    n2, p2 = n, 0.15
     ER2 = nx.erdos_renyi_graph(n2, p2, seed=2)
     degrees = [d for n, d in ER2.degree()]
     degree_counts = np.bincount(degrees)
@@ -100,7 +107,7 @@ with PdfPages(PDF_NAME) as pdf:
     plt.close(fig)
 
     # Prova 3: più nodi, probabilità bassa
-    n3, p3 = 100000, 0.40
+    n3, p3 = n, 0.40
     ER3 = nx.erdos_renyi_graph(n3, p3, seed=3)
     degrees = [d for n, d in ER3.degree()]
     degree_counts = np.bincount(degrees)
